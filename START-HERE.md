@@ -1,6 +1,6 @@
 # CTF / 逆向 Skills 新手整合包
 
-我已经把这批相关 skill 导出到当前目录下的 `skills-export/`。
+这批相关 skill 就在当前仓库根目录下（`ctf-*`、`strix-*`、`solve-challenge`、`brainstorming`）。
 
 ## 现在的推荐入口
 
@@ -101,7 +101,7 @@
 ## 快速安装到 Codex 技能目录
 
 ```bash
-cd skills-export
+cd ctf-super-hub   # 仓库根目录
 ./install-to-codex.sh
 ```
 

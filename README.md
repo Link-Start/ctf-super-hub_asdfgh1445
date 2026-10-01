@@ -1,12 +1,13 @@
 <div align="center">
 
 <p>
-  <img src="./assets/banner.svg" alt="CTF Super Hub Banner" width="100%" />
+  <img src="./assets/banner.png" alt="CTF Super Hub" width="100%" />
 </p>
 
 # CTF Super Hub / CTF Skills 小白整合包
 
-**给小白用户准备的一套 CTF / 逆向题目入口。**  
+**给小白用户准备的一套 CTF / 逆向题目统一入口。**
+
 如果你经常遇到这些问题：
 
 **题目不会分类、skill 不知道怎么选、第一步不知道该做什么。**
@@ -21,6 +22,7 @@
 </p>
 
 <p>
+  <img alt="version" src="https://img.shields.io/badge/version-1.1.0-ff7a18">
   <img alt="license" src="https://img.shields.io/github/license/asdfgh1445/ctf-super-hub">
   <img alt="stars" src="https://img.shields.io/github/stars/asdfgh1445/ctf-super-hub?style=social">
   <img alt="forks" src="https://img.shields.io/github/forks/asdfgh1445/ctf-super-hub?style=social">
@@ -44,6 +46,8 @@
 - [安装](#安装)
 - [安装成功怎么确认](#安装成功怎么确认)
 - [安装后怎么用](#安装后怎么用)
+- [升级与版本检查](#升级与版本检查)
+- [质量保障](#质量保障)
 - [常见问题小白版](#常见问题小白版)
 - [仓库结构](#仓库结构)
 - [文档导航](#文档导航)
@@ -76,7 +80,7 @@
 
 > **一套给 AI 用的做题说明书 + 路由器。**
 
-你不用先研究完所有目录，也不用先记住所有 skill 名字。  
+你不用先研究完所有目录，也不用先记住所有 skill 名字。
 大多数时候，你只要先会用 `ctf-super-hub` 就够了。
 
 ---
@@ -97,7 +101,7 @@
 - AI 读到对应 skill
 - 然后按这份 skill 规定的流程来帮你分析、拆题、推进
 
-所以你不用先关心 skill 里面的细节怎么写。  
+所以你不用先关心 skill 里面的细节怎么写。
 **先会调用，先把题做起来，最重要。**
 
 ---
@@ -128,7 +132,7 @@
 
 ### 第 2 步：新开一个会话
 
-不要在一个已经聊了很久、话题很多的旧会话里测试。  
+不要在一个已经聊了很久、话题很多的旧会话里测试。
 **新会话最稳。**
 
 ### 第 3 步：直接用主入口
@@ -144,7 +148,7 @@
 
 ### 第 4 步：把你手头材料贴给 AI
 
-你不需要一次就整理得很专业。  
+你不需要一次就整理得很专业。
 有多少给多少就行，例如：
 
 - 题面
@@ -158,7 +162,7 @@
 
 ### 第 5 步：跟着它给你的下一步做
 
-你不需要一下子把整题看懂。  
+你不需要一下子把整题看懂。
 这个仓库的目标，本来就是帮你解决“第一步不知道做什么”的问题。
 
 ---
@@ -169,13 +173,14 @@
 
 如果你只打算记一个名字，就记它。
 
-它会帮你：
+它是整个仓库的**唯一编排中心**，会帮你：
 
 - 自动判断题目更像哪一类
 - 信息不够时，先带你做最小化头脑风暴
 - 在 `teaching / competition / hints-only` 三种风格间切换
+- 动态扫描已安装的 skill，只路由到真实可用的那些
 - 需要时增强到 `strix-*` 做 Web / 接口 / 漏洞验证动作
-- 题做完后衔接到 `ctf-writeup`
+- 需要组队时，按「1 主 + 最多 2 辅」编排，角色分工清楚
 
 适合：**绝大多数人、绝大多数题目、绝大多数第一次使用场景。**
 
@@ -183,7 +188,8 @@
 
 如果你是刚接触 CTF，或者不喜欢太多术语，可以先用它。
 
-它和主入口方向一致，但表达更温和，更像“带学版入口”。
+它是主入口的**新手变体**：路由规则完全同源，但表达更温和，
+先给一段新手教程，术语全部带人话解释。
 
 适合：
 
@@ -194,6 +200,10 @@
 ---
 
 ## 它到底怎么工作
+
+<p>
+  <img src="./assets/architecture.png" alt="路由架构" width="100%" />
+</p>
 
 你可以把它理解成两种模式。
 
@@ -240,6 +250,13 @@
 所以你平时不用先记住一堆 `strix-*` 名字。
 
 大多数时候，**直接从 `ctf-super-hub` 开始就够了。**
+
+### 两条契约，保证它不会跑偏
+
+- **交接契约**：每个 skill 任务没做完不讨论下一站；做完就结束；
+  只有你明确问“下一步呢”，才回到编排中心重新分流。不会自作主张连跑一串 skill。
+- **安装感知路由**：编排中心每次先扫描你机器上真实安装了哪些 skill，
+  没装的一律不进候选，不会推荐一个你根本没装的 skill。
 
 ---
 
@@ -302,14 +319,17 @@
 
 ```bash
 git clone https://github.com/asdfgh1445/ctf-super-hub.git
-cd ctf-super-hub/skills-export
+cd ctf-super-hub
 ```
 
 如果你不会用 Git，也没关系：
 
 1. 在 GitHub 页面下载 ZIP
 2. 解压
-3. 进入解压后的 `ctf-super-hub/skills-export` 目录
+3. 进入解压后的 `ctf-super-hub` 目录
+
+> 注意：skill 文件夹就在仓库根目录下（`ctf-*`、`strix-*`、`solve-challenge`、
+> `brainstorming`），没有额外的子目录，直接在仓库根目录执行下面的复制命令即可。
 
 ### 2. 你知道自己要装到哪个 AI 工具里
 
@@ -320,7 +340,7 @@ cd ctf-super-hub/skills-export
 - Gemini CLI
 - OpenCode
 
-你只需要照着自己正在用的那个装就行。  
+你只需要照着自己正在用的那个装就行。
 **不用四个都装。**
 
 ### 3. 你知道什么叫“进入目录”
@@ -328,12 +348,12 @@ cd ctf-super-hub/skills-export
 后面的命令经常会先让你执行：
 
 ```bash
-cd skills-export
+cd ctf-super-hub
 ```
 
 它的意思不是安装，而是：
 
-> **先让终端切换到这个仓库里的 `skills-export` 文件夹。**
+> **先让终端切换到这个仓库的根目录。**
 
 如果你没切进去，后面的复制命令很容易报错。
 
@@ -344,7 +364,7 @@ cd skills-export
 如果你完全没经验，按下面这个顺序做最稳：
 
 1. 下载仓库
-2. 进入 `skills-export`
+2. 进入仓库根目录
 3. 选择你正在用的 AI 工具
 4. 执行对应那一段命令
 5. 重启工具，或者新开一个会话
@@ -355,10 +375,10 @@ cd skills-export
 
 这是最推荐的安装方式，因为仓库已经内置脚本了。
 
-先进入目录：
+先进入仓库根目录：
 
 ```bash
-cd /path/to/ctf-super-hub/skills-export
+cd /path/to/ctf-super-hub
 ```
 
 然后执行：
@@ -399,18 +419,16 @@ cd /path/to/ctf-super-hub/skills-export
 ~/.claude/skills
 ```
 
-安装步骤：
+安装步骤（在仓库根目录执行）：
 
 ```bash
 mkdir -p ~/.claude/skills
-cd /path/to/ctf-super-hub/skills-export
 cp -R brainstorming solve-challenge ctf-* strix-* ~/.claude/skills/
 ```
 
 说明：
 
 - `mkdir -p`：如果目录不存在，就先创建
-- `cd .../skills-export`：切到仓库目录
 - `cp -R ...`：把这些 skill 文件夹复制过去
 
 如果你的 Claude Code 用的是别的自定义 skills 路径，把最后的 `~/.claude/skills/` 换成你自己的目录即可。
@@ -430,11 +448,10 @@ Gemini CLI 如果支持本地 skills 目录，常见示例可以放在：
 ~/.gemini/skills
 ```
 
-安装步骤：
+安装步骤（在仓库根目录执行）：
 
 ```bash
 mkdir -p ~/.gemini/skills
-cd /path/to/ctf-super-hub/skills-export
 cp -R brainstorming solve-challenge ctf-* strix-* ~/.gemini/skills/
 ```
 
@@ -450,22 +467,21 @@ cp -R brainstorming solve-challenge ctf-* strix-* ~/.gemini/skills/
 
 ### 4. OpenCode 安装方式
 
-OpenCode 的 skills 目录在不同版本、不同发行方式下可能不完全一样。  
+OpenCode 的 skills 目录在不同版本、不同发行方式下可能不完全一样。
 所以这里给你一个**常见目录写法**：
 
 ```bash
 ~/.opencode/skills
 ```
 
-安装步骤：
+安装步骤（在仓库根目录执行）：
 
 ```bash
 mkdir -p ~/.opencode/skills
-cd /path/to/ctf-super-hub/skills-export
 cp -R brainstorming solve-challenge ctf-* strix-* ~/.opencode/skills/
 ```
 
-如果你的 OpenCode 实际不是这个目录，也没关系。  
+如果你的 OpenCode 实际不是这个目录，也没关系。
 你只需要把命令最后的 `~/.opencode/skills/` 替换成你自己的实际目录即可。
 
 你真正要记住的是这句话：
@@ -513,7 +529,7 @@ ls ~/.opencode/skills/ctf-super-hub
 
 1. 你是不是复制到了错误目录
 2. 你是不是没有重启工具 / 没开新会话
-3. 你执行 `cp -R ...` 时，其实不在 `skills-export` 目录里
+3. 你执行 `cp -R ...` 时，其实不在仓库根目录里
 
 特别是第 3 条，非常常见。
 
@@ -523,8 +539,8 @@ ls ~/.opencode/skills/ctf-super-hub
 no matches found: ctf-*
 ```
 
-通常说明你当前目录不对。  
-先 `cd /path/to/ctf-super-hub/skills-export` 再重试。
+通常说明你当前目录不对。
+先 `cd /path/to/ctf-super-hub` 再重试。
 
 ---
 
@@ -579,6 +595,48 @@ no matches found: ctf-*
 
 ---
 
+## 升级与版本检查
+
+v1.1.0 之后，主入口自带版本检查，不需要你盯仓库。
+
+<p>
+  <img src="./assets/workflow.png" alt="质量与版本回路" width="100%" />
+</p>
+
+工作方式：
+
+- 每次进入 `ctf-super-hub`，它会自动跑一次版本检查
+  （读取仓库里的 `UPDATE.json`，**24 小时内只发一次网络请求**，失败静默不影响使用）
+- 有新版本时，回复末尾会出现一条 `🔔` 提醒，带版本号和更新说明
+- 你**紧接着回复 `1`**，它就自动执行更新脚本：拉取仓库 + 重新同步全部 skill
+- 你本地改过 skill 有未提交修改时，更新脚本会**拒绝执行**并列出文件清单，
+  不会覆盖你自己的改动——先提交或 stash，再更新
+
+也可以手动更新：
+
+```bash
+bash ~/.codex/skills/ctf-super-hub/scripts/update_skills.sh --dry-run   # 先看会做什么
+bash ~/.codex/skills/ctf-super-hub/scripts/update_skills.sh             # 真正执行
+```
+
+---
+
+## 质量保障
+
+这个仓库对 skill 质量有分级校验，不是“能跑就行”：
+
+- **L1 结构校验**：`python3 scripts/validate_skills.py`
+  检查全部 35 个 skill 的 frontmatter、description 触发名、文内相对链接、
+  Python 脚本语法、仓库关键文件；支持 `--json` 接 CI
+- **L2 行为冒烟 / L3 留出回归**：`evals/hub-routing/` 内置 5 个盲测场景
+  （RSA 分类、SQLi 增强、OSINT 反例、组合编排、reverse/pwn 留出），
+  由不知道预期答案的执行者真实跑路由，再用判分器 + 人复核打分；
+  每次改动路由规则后全量重跑，fixtures 就是回归基线
+- **轻量化审计**：叶子 skill 的瘦身原则与结论记录在
+  [`docs/skill-weight-audit.md`](./docs/skill-weight-audit.md)
+
+---
+
 ## 常见问题小白版
 
 ### Q1：我一定要先懂题型分类吗？
@@ -602,7 +660,7 @@ no matches found: ctf-*
 - `ctf-super-hub`
 - `ctf-beginner-hub`
 
-就够了。
+就够了。编排中心自己会扫描你装了哪些 skill。
 
 ### Q3：我只想学习，不想 AI 一口气把答案说完，怎么办？
 
@@ -617,8 +675,9 @@ no matches found: ctf-*
 
 不太建议。
 
-因为主入口的价值之一，就是能自动分流到其他专项 skill。  
-你只装一个入口，很多路由能力就用不上了。
+因为主入口的价值之一，就是能自动分流到其他专项 skill。
+你只装一个入口，很多路由能力就用不上了（而且它是安装感知的——
+没装的 skill 它不会推荐，能力就空转了）。
 
 最稳妥的做法还是：
 
@@ -628,7 +687,7 @@ no matches found: ctf-*
 
 可以。
 
-你不用等“信息整理得很完整”再开始。  
+你不用等“信息整理得很完整”再开始。
 你现在手里有什么，就先给什么。
 
 ### Q6：它回复我说还需要更多信息，是不是装坏了？
@@ -643,6 +702,11 @@ no matches found: ctf-*
 
 如果你是纯新手、容易被术语劝退，就先用 `ctf-beginner-hub`。
 
+### Q8：回复 `1` 会不会误触发更新？
+
+不会。只有在你**刚收到 `🔔` 版本提醒之后**紧接着回复 `1`，
+它才会当作“确认更新”。没有提醒时，`1` 就是普通消息。
+
 ---
 
 ## 仓库结构
@@ -655,22 +719,27 @@ no matches found: ctf-*
 .
 ├── README.md
 ├── START-HERE.md
-├── SKILL-INDEX.md
+├── SKILL-INDEX.md          # 技能索引 + 全套 skill 共同遵守的编排契约
+├── UPDATE.json             # 版本检查读取的官方版本文件
 ├── install-to-codex.sh
 ├── scripts/
 │   ├── install_ctf_tools.sh
-│   └── validate_skills.py
+│   └── validate_skills.py  # L1 结构校验（frontmatter/链接/语法，--json 可接 CI）
+├── evals/
+│   └── hub-routing/        # 盲测路由评测：场景、判分器、fixtures 回归基线
 ├── docs/
 │   ├── USAGE.md
 │   ├── PUBLISHING.md
 │   ├── LOCALIZATION.md
-│   └── LINUXDO.md
-├── ctf-super-hub/        # 主入口（默认推荐）
-├── ctf-beginner-hub/     # 新手入口
-├── solve-challenge/      # 偏自动分流
-├── brainstorming/        # 偏先理清题意
-├── ctf-*/                # 各题型专项 skill
-└── strix-*/              # Web / 接口 / 漏洞验证增强层
+│   ├── LINUXDO.md
+│   └── skill-weight-audit.md
+├── ctf-super-hub/          # 唯一编排中心（默认推荐）
+│   └── scripts/            #   动态发现 / 版本检查 / 更新脚本
+├── ctf-beginner-hub/       # 新手入口（主入口的新手变体）
+├── solve-challenge/        # 自动求解执行器
+├── brainstorming/          # 先理清题意
+├── ctf-*/                  # 各题型专项 skill
+└── strix-*/                # Web / 接口 / 漏洞验证增强层
 ```
 
 你真的需要先关心的，通常只有：
@@ -684,11 +753,12 @@ no matches found: ctf-*
 ## 文档导航
 
 - [`START-HERE.md`](./START-HERE.md)：最快上手，建议先看
-- [`SKILL-INDEX.md`](./SKILL-INDEX.md)：所有 skill 的索引
+- [`SKILL-INDEX.md`](./SKILL-INDEX.md)：所有 skill 的索引 + 编排契约
 - [`docs/USAGE.md`](./docs/USAGE.md)：更完整的使用说明
 - [`docs/LINUXDO.md`](./docs/LINUXDO.md)：LinuxDo 发帖与小白社区建议
 - [`docs/PUBLISHING.md`](./docs/PUBLISHING.md)：GitHub 发布前检查清单
 - [`docs/LOCALIZATION.md`](./docs/LOCALIZATION.md)：汉化策略与约定
+- [`docs/skill-weight-audit.md`](./docs/skill-weight-audit.md)：叶子 skill 轻量化审计
 
 ---
 
@@ -703,9 +773,16 @@ python3 scripts/validate_skills.py
 它会检查：
 
 - 关键仓库文件是否存在
-- 主要 skill 是否有 frontmatter
+- 全部 skill 的 frontmatter 与 description 触发名
+- 每个 SKILL.md 里的相对链接是否有效
+- skill 内置 Python 脚本是否能通过语法编译
 - 主入口和关键参考文件是否完整
-- 基础结构是否还正常
+
+改了路由规则后，跑盲测回归：
+
+```bash
+python3 evals/hub-routing/check_contracts.py
+```
 
 同时仓库也带了 GitHub Actions：
 
@@ -729,12 +806,8 @@ python3 scripts/validate_skills.py
   </a>
   &nbsp;
   <a href="https://linux.do">
-    <img src="https://img.shields.io/badge/社区-LinuxDo-3B82F6?style=for-the-badge" alt="LinuxDo" />
+    <img src="https://img.shields.io/badge/社区-LinuxDo-ff7a18?style=for-the-badge" alt="LinuxDo" />
   </a>
-</p>
-
-<p align="center">
-  <sub>LinuxDo 发布帖：待补充</sub>
 </p>
 
 <p align="center">
