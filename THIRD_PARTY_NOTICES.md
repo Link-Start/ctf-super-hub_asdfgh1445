@@ -91,7 +91,7 @@
 - `strix-*`
 - `strix-beginner-hub`
 
-- Source: `/Users/zhaomingzhe/.codex/skills/strix-*`
+- Source: `~/.codex/skills/strix-*`（本地安装路径）
 - Original author: 未在导出内容中统一标识；请以你本地 Strix 来源为准
 - Original license: 请按 Strix 实际上游来源补充确认
 - Modified by: `asdfgh1445`
