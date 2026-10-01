@@ -1,0 +1,177 @@
+<svg width="1600" height="880" viewBox="0 0 1600 880" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232427"/>
+      <stop offset="1" stop-color="#18191B"/>
+    </linearGradient>
+    <radialGradient id="rivet" cx="0.35" cy="0.35" r="1">
+      <stop offset="0" stop-color="#A0A0A4"/>
+      <stop offset="0.55" stop-color="#606064"/>
+      <stop offset="1" stop-color="#2C2C2E"/>
+    </radialGradient>
+    <pattern id="hz" width="50" height="12" patternUnits="userSpaceOnUse" patternTransform="skewX(-21)">
+      <rect width="50" height="12" fill="#141517"/>
+      <rect width="25" height="12" fill="#FF7A18"/>
+    </pattern>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.04 0"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="880" fill="#141517"/>
+  <rect width="1600" height="880" filter="url(#grain)"/>
+  <rect width="1600" height="12" fill="url(#hz)"/>
+  <rect y="868" width="1600" height="12" fill="url(#hz)"/>
+
+  <!-- header -->
+  <text x="84" y="58" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#92908C" letter-spacing="1">CTF SUPER HUB · ROUTING ARCHITECTURE</text>
+  <text x="84" y="87" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18" letter-spacing="1">UNIT-35 · SINGLE ORCHESTRATOR</text>
+  <text x="76" y="135" font-weight="700" font-size="40" fill="#F0EEEA">一个编排中心，一层增强</text>
+  <rect x="1290" y="96" width="226" height="42" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <text x="1306" y="123" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="15" fill="#FF7A18">ctf-super-hub v1.1.0</text>
+  <line x1="84" y1="172" x2="1516" y2="172" stroke="#464648" stroke-width="1"/>
+
+  <!-- user -->
+  <text x="800" y="207" font-size="17" fill="#CECBC6" text-anchor="middle">用户 · 题面 / 附件 / URL / 服务 / 已试步骤</text>
+  <line x1="800" y1="226" x2="800" y2="242" stroke="#FF7A18" stroke-width="2"/>
+  <path d="M793 241 L800 248 L807 241" fill="none" stroke="#FF7A18" stroke-width="2"/>
+
+  <!-- hub plate -->
+  <rect x="470" y="258" width="660" height="308" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <rect x="475" y="263" width="650" height="298" fill="none" stroke="#3A3A3C" stroke-width="1"/>
+  <rect x="470" y="258" width="660" height="40" fill="#FF7A18"/>
+  <line x1="470" y1="298" x2="1130" y2="298" stroke="#121213" stroke-width="2"/>
+  <circle cx="482" cy="278" r="3.5" fill="#121213"/>
+  <circle cx="1118" cy="278" r="3.5" fill="#121213"/>
+  <text x="500" y="285" font-weight="700" font-size="15" fill="#121213">ctf-super-hub · 唯一编排中心 · DEFAULT ORCHESTRATOR</text>
+
+  <g font-size="18" fill="#F0EEEA">
+    <text x="500" y="336" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18">01</text><text x="536" y="336">版本检查 · check-update.sh，24h 缓存，失败静默</text>
+    <text x="500" y="372" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18">02</text><text x="536" y="372">模式判断 · A 自动分流 / B 先头脑风暴再分流</text>
+    <text x="500" y="408" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18">03</text><text x="536" y="408">动态发现 · 脚本扫描安装位，只路由到已安装的 skill</text>
+    <text x="500" y="444" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18">04</text><text x="536" y="444">五问筛选 · 结果 / 输入 / 阶段 / 边界 / 可执行性</text>
+    <text x="500" y="480" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="14" fill="#FF7A18">05</text><text x="536" y="480">单 Skill 优先 · 确需组队时 1 主 + 最多 2 辅</text>
+  </g>
+  <line x1="500" y1="352" x2="1100" y2="352" stroke="#3A3A3C" stroke-width="1"/>
+  <line x1="500" y1="388" x2="1100" y2="388" stroke="#3A3A3C" stroke-width="1"/>
+  <line x1="500" y1="424" x2="1100" y2="424" stroke="#3A3A3C" stroke-width="1"/>
+  <line x1="500" y1="460" x2="1100" y2="460" stroke="#3A3A3C" stroke-width="1"/>
+  <text x="500" y="521" font-size="14" fill="#92908C">输出编排建议后停止 · 不代替下游 skill 做题</text>
+
+  <!-- brainstorming plate -->
+  <rect x="84" y="322" width="300" height="116" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <rect x="89" y="327" width="290" height="106" fill="none" stroke="#3A3A3C" stroke-width="1"/>
+  <circle cx="95" cy="333" r="2.6" fill="url(#rivet)"/><circle cx="373" cy="333" r="2.6" fill="url(#rivet)"/>
+  <circle cx="95" cy="427" r="2.6" fill="url(#rivet)"/><circle cx="373" cy="427" r="2.6" fill="url(#rivet)"/>
+  <text x="104" y="356" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="20" fill="#F0EEEA">brainstorming</text>
+  <text x="104" y="384" font-weight="700" font-size="13" fill="#FF7A18">AUX · 前置筛选</text>
+  <text x="104" y="411" font-size="14" fill="#CECBC6">题意不清时，先澄清目标与卡点</text>
+  <line x1="384" y1="376" x2="456" y2="376" stroke="#FF7A18" stroke-width="2" stroke-dasharray="9 7" opacity="0.7"/>
+  <path d="M458 369 L468 376 L458 383" fill="none" stroke="#FF7A18" stroke-width="2"/>
+
+  <!-- strix plate -->
+  <rect x="1216" y="300" width="300" height="162" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <rect x="1221" y="305" width="290" height="152" fill="none" stroke="#3A3A3C" stroke-width="1"/>
+  <circle cx="1227" cy="311" r="2.6" fill="url(#rivet)"/><circle cx="1505" cy="311" r="2.6" fill="url(#rivet)"/>
+  <circle cx="1227" cy="451" r="2.6" fill="url(#rivet)"/><circle cx="1505" cy="451" r="2.6" fill="url(#rivet)"/>
+  <text x="1236" y="334" font-weight="700" font-size="20" fill="#F0EEEA">strix-* 增强层</text>
+  <text x="1236" y="361" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="11" fill="#FF7A18" letter-spacing="1">ESCALATION · 20 SKILLS</text>
+  <g font-size="13" fill="#CECBC6">
+    <text x="1236" y="387">工具链 httpx / katana / ffuf</text>
+    <text x="1236" y="408">          / nuclei / sqlmap</text>
+    <text x="1236" y="429">漏洞专项 SQLi / XSS / SSRF / RCE…</text>
+    <text x="1236" y="450">进入验证阶段才切换，判型先看 ctf-web</text>
+  </g>
+  <line x1="1130" y1="376" x2="1202" y2="376" stroke="#FF7A18" stroke-width="2" stroke-dasharray="9 7" opacity="0.7"/>
+  <path d="M1204 369 L1214 376 L1204 383" fill="none" stroke="#FF7A18" stroke-width="2"/>
+
+  <!-- bus + category plates -->
+  <line x1="800" y1="566" x2="800" y2="600" stroke="#FF7A18" stroke-width="2"/>
+  <line x1="160" y1="600" x2="1440" y2="600" stroke="#646466" stroke-width="2"/>
+  <g text-anchor="middle">
+    <g transform="translate(85 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-web</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">Web 漏洞</text>
+    </g>
+    <g transform="translate(245 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-crypto</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">密码学</text>
+    </g>
+    <g transform="translate(405 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-reverse</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">逆向</text>
+    </g>
+    <g transform="translate(565 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-pwn</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">二进制利用</text>
+    </g>
+    <g transform="translate(725 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-forensics</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">取证</text>
+    </g>
+    <g transform="translate(885 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-osint</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">开源情报</text>
+    </g>
+    <g transform="translate(1045 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-malware</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">恶意软件</text>
+    </g>
+    <g transform="translate(1205 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-misc</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">杂项 / jail</text>
+    </g>
+    <g transform="translate(1365 616)">
+      <line x1="75" y1="-16" x2="75" y2="0" stroke="#646466" stroke-width="2"/>
+      <rect width="150" height="66" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+      <circle cx="9" cy="9" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="9" r="2.4" fill="url(#rivet)"/>
+      <circle cx="9" cy="57" r="2.4" fill="url(#rivet)"/><circle cx="141" cy="57" r="2.4" fill="url(#rivet)"/>
+      <text x="75" y="30" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="16" fill="#F0EEEA">ctf-ai-ml</text>
+      <text x="75" y="52" font-size="12" fill="#92908C">AI · ML</text>
+    </g>
+  </g>
+
+  <line x1="85" y1="708" x2="1516" y2="708" stroke="#505052" stroke-width="1" stroke-dasharray="5 7"/>
+  <text x="85" y="736" font-size="15" fill="#CECBC6">跨域互为证据补充 · ctf-crypto / ctf-reverse / ctf-web 互转        ctf-writeup · 验收约束（按要求才进）</text>
+
+  <!-- footer plates -->
+  <rect x="84" y="764" width="702" height="82" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <text x="102" y="790" font-weight="700" font-size="13" fill="#FF7A18">HANDOFF CONTRACT · 交接契约</text>
+  <text x="102" y="820" font-size="15" fill="#CECBC6">任务未完成不讨论下一站；完成即结束；用户问下一步，才回编排中心</text>
+  <rect x="814" y="764" width="702" height="82" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <text x="832" y="790" font-weight="700" font-size="13" fill="#FF7A18">INSTALL-AWARE ROUTING · 只路由到已安装的 skill</text>
+  <text x="832" y="820" font-size="15" fill="#CECBC6">发现脚本扫描真实安装位，MISSING 不参与路由；离线兜底 routing-table.md</text>
+</svg>

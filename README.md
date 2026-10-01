@@ -1,7 +1,7 @@
 <div align="center">
 
 <p>
-  <img src="./assets/banner.png" alt="CTF Super Hub" width="100%" />
+  <img src="./assets/banner.svg" alt="CTF Super Hub" width="100%" />
 </p>
 
 # CTF Super Hub / CTF Skills 小白整合包
@@ -202,7 +202,7 @@
 ## 它到底怎么工作
 
 <p>
-  <img src="./assets/architecture.png" alt="路由架构" width="100%" />
+  <img src="./assets/architecture.svg" alt="路由架构" width="100%" />
 </p>
 
 你可以把它理解成两种模式。
@@ -600,7 +600,7 @@ no matches found: ctf-*
 v1.1.0 之后，主入口自带版本检查，不需要你盯仓库。
 
 <p>
-  <img src="./assets/workflow.png" alt="质量与版本回路" width="100%" />
+  <img src="./assets/workflow.svg" alt="质量与版本回路" width="100%" />
 </p>
 
 工作方式：

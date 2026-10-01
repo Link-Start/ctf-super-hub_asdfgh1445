@@ -1,0 +1,58 @@
+<svg width="1600" height="480" viewBox="0 0 1600 480" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232427"/>
+      <stop offset="1" stop-color="#18191B"/>
+    </linearGradient>
+    <radialGradient id="rivet" cx="0.35" cy="0.35" r="1">
+      <stop offset="0" stop-color="#A0A0A4"/>
+      <stop offset="0.55" stop-color="#606064"/>
+      <stop offset="1" stop-color="#2C2C2E"/>
+    </radialGradient>
+    <pattern id="hz" width="50" height="14" patternUnits="userSpaceOnUse" patternTransform="skewX(-21)">
+      <rect width="50" height="14" fill="#141517"/>
+      <rect width="25" height="14" fill="#FF7A18"/>
+    </pattern>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.045 0"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="480" fill="#141517"/>
+  <rect width="1600" height="480" filter="url(#grain)"/>
+  <rect width="1600" height="14" fill="url(#hz)"/>
+  <rect y="466" width="1600" height="14" fill="url(#hz)"/>
+
+  <!-- left block -->
+  <text x="84" y="75" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="17" fill="#92908C" letter-spacing="1">CTF / REVERSE SKILLS COLLECTION</text>
+  <text x="84" y="106" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="15" fill="#FF7A18" letter-spacing="1">UNIT-35 · ORCHESTRATED</text>
+  <text x="76" y="196" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="84" fill="#F0EEEA">CTF SUPER HUB</text>
+  <text x="84" y="267" font-weight="700" font-size="30" fill="#F0EEEA">CTF / 逆向 Skills 中文整合发布页</text>
+  <rect x="84" y="300" width="476" height="4" fill="#FF7A18"/>
+  <text x="84" y="333" font-size="19" fill="#CECBC6">唯一编排中心 · 动态发现 · 单 Skill 优先 · 1 主 + 2 辅组合 · 交接契约</text>
+  <text x="84" y="366" font-size="16" fill="#92908C">35 个 skill · 版本检查与一键更新 · 盲测评测基线 · 分级质量校验</text>
+
+  <!-- version plate -->
+  <rect x="84" y="398" width="246" height="40" fill="#1C1D1F" stroke="#5C5C5E" stroke-width="2"/>
+  <circle cx="96" cy="408" r="3" fill="url(#rivet)"/>
+  <circle cx="318" cy="408" r="3" fill="url(#rivet)"/>
+  <circle cx="96" cy="428" r="3" fill="url(#rivet)"/>
+  <circle cx="318" cy="428" r="3" fill="url(#rivet)"/>
+  <text x="116" y="424" font-weight="700" font-size="16" fill="#FF7A18">v1.1.0 · 编排化架构</text>
+
+  <!-- entry plate -->
+  <rect x="1080" y="128" width="436" height="280" fill="url(#plate)" stroke="#5C5C5E" stroke-width="2"/>
+  <rect x="1085" y="133" width="426" height="270" fill="none" stroke="#3A3A3C" stroke-width="1"/>
+  <rect x="1080" y="128" width="436" height="42" fill="#FF7A18"/>
+  <line x1="1080" y1="170" x2="1516" y2="170" stroke="#121213" stroke-width="2"/>
+  <circle cx="1092" cy="149" r="3.5" fill="#121213"/>
+  <circle cx="1504" cy="149" r="3.5" fill="#121213"/>
+  <text x="1116" y="155" font-weight="700" font-size="15" fill="#121213">DEFAULT ENTRY · 默认入口</text>
+  <text x="1098" y="212" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" font-size="27" fill="#F0EEEA">ctf-super-hub</text>
+  <text x="1098" y="241" font-size="14" fill="#CECBC6">auto / brainstorm · 手动分流</text>
+  <text x="1098" y="267" font-size="14" fill="#CECBC6">teaching / competition / hints-only</text>
+  <rect x="1098" y="286" width="400" height="6" fill="none" stroke="#5C5C5E" stroke-width="1"/>
+  <rect x="1098" y="286" width="236" height="6" fill="#FF7A18"/>
+  <text x="1098" y="388" font-size="12" fill="#92908C">中文用户优先体验</text>
+</svg>
