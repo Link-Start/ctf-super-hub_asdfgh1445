@@ -23,6 +23,9 @@
 - [lldb (LLVM Debugger)](#lldb-llvm-debugger)
   - [Basic Commands](#basic-commands)
   - [Scripting (Python)](#scripting-python)
+- [Ghidra Debugger (Ghidra 11+)](#ghidra-debugger-ghidra-11)
+  - [Setup and launch](#setup-and-launch)
+  - [Core workflow](#core-workflow)
 - [x64dbg (Windows Debugger)](#x64dbg-windows-debugger)
   - [Key Features](#key-features)
   - [Scripting](#scripting)
@@ -498,6 +501,44 @@ def hook_strcmp(debugger, command, result, internal_dict):
 ```
 
 **Key insight:** Use lldb for macOS binaries (Mach-O), iOS apps, and when GDB isn't available. `image list` gives ASLR slide for PIE binaries. Scripting API is more structured than GDB's.
+
+---
+
+## Ghidra Debugger (Ghidra 11+)
+
+Integrated debugger in the same window as your static analysis — the unique
+value is that renames/types/structs you made statically are visible while
+debugging, and breakpoint addresses track your labels.
+
+### Setup and launch
+
+- Ghidra 11+: Debugger tool icon (bug) in the tool chest, or
+  `Tool` → `Ghidra Debugger`. Backends: `gdb` (local/remote Linux),
+  `gdbserver`, `lldb` (macOS), `dbgeng`/`TraceDbgEng` (Windows), plus trace
+  import from rr/DTrace.
+- Local Linux: open the binary in CodeBrowser → Debugger → Configure
+  Launchers → `gdb` → fill program args → Launch.
+- Remote (cross-arch): run `gdbserver :1234 ./binary` on the target, connect
+  with the `gdb remote` launcher.
+- macOS: the lldb backend covers local processes; PT_DENY_ATTACH and friends
+  → [anti-analysis-macos.md](anti-analysis-macos.md).
+
+### Core workflow
+
+1. Breakpoints: click in the listing margin (same as static) or the Objects
+   panel; conditional breakpoints support Sleigh expressions.
+2. Registers/Memory/Stack panes; hover-a-field struct rendering works on
+   your defined structs — a `vm_ctx` struct defined statically shows decoded
+   in the watch pane while the VM runs (pair with
+   [vm-analysis.md](vm-analysis.md) step 6).
+3. Patching: edit memory live in the listing (right-click → patch), then
+   `Debugger` → `Save patched program` to export the patched binary.
+4. Recording: `Recorder` captures an execution trace; time-travel the trace
+   offline afterward (useful for one-shot crackmes that detect re-runs).
+
+**Key insight:** for a VM challenge, the Ghidra Debugger's combination of
+"static struct annotations + live watch" turns the dispatch loop into a
+readable state machine without writing any Frida script.
 
 ---
 

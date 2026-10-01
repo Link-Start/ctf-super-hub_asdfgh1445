@@ -664,3 +664,57 @@ Run `./target_bin`; the printed calls reveal the algorithm without decompiling t
 **Key insight:** Any runtime that still resolves module names through `sys.path` (Nuitka, PyInstaller with `--onefile`, Py2Exe with `--bundle_files=1` off, frozen CPython) can be shimmed at import time with CWD stubs. Grep `strings` output for module names to pick good hook targets.
 
 **References:** X-MAS CTF 2018 — A Christmas Carol, writeup 12667
+
+---
+
+## Nim & Zig Binary Reversing (Quick Reference)
+
+### Nim
+
+**Identification:** `strings` shows a Nim compiler version (`Nim 1.6.x`/`2.0.x`),
+symbols like `NimMain`, `NimMainInner`, `PreMain`, `nim_program_result`,
+`nimGC_...`, and errors in Nim format (`Error: unhandled exception`).
+Binaries are statically linked C output — huge, but the user logic is small.
+
+**What changes vs plain C:**
+- Real entry chain: `_start` → `NimMain` → `PreMain` → `InitStack`/GC init →
+  your module init → `NimMainModule` (this is "main"). Start analysis at
+  `NimMainModule`.
+- Strings are not NUL-terminated: they are `(len, ptr)` pairs. A Nim string
+  reaches a function as `NimStringDesc*`-ish struct — read the length field
+  first, then dump `len` bytes (the classic "string looks garbled in
+  ltrace" cause).
+- `echo`/`write` go through `echoBinSafe`/`writeToStdOut`-style runtime
+  helpers — hooking libc `write` still works for capture.
+- Sequences (`seq[T]`) are also length-prefixed pointer structs; bounds
+  checks appear as `indexOutOfBounds` raising `RangeDefect`.
+- Move to dynamic analysis early: the GC and RTTI bookkeeping makes static
+  decompilation noisy compared to the ~50 lines of actual check logic.
+
+### Zig
+
+**Identification:** embedded toolchain string (`zig-linux-x86_64-0.1x.x`),
+`__zig_probe_stack` / `__zig_fail_cold` / `__zig_...` symbols, panics like
+`panic: integer overflow`, `attempt to use null value` (unwrapped optional).
+
+**What changes vs plain C:**
+- Source paths + line info often compiled in (`/home/user/src/main.zig`) —
+  immediately reveals function granularity; keep those strings visible in
+  Ghidra (they anchor error blocks to call sites via `panic` format args).
+- Optionals/errors are values, not exceptions: an `?T` is a tagged pair; `!T`
+  error unions surface as `(err_code, value)` returns switched on at call
+  sites — decompile the switch to recover the success path.
+- Slices are `(ptr, len)` pairs passed in two registers — same reading
+  discipline as Nim strings.
+- Runtime safety (ReleaseSafe builds) inserts explicit overflow/underflow
+  checks (`panic: integer overflow` blocks); these are noise — the real logic
+  is the arithmetic between them. ReleaseFast strips them but keeps panic
+  strings for unreachable paths.
+- `std.crypto` usage: calls into `crypto.core`/`crypto.aead`-labeled symbols
+  (or vendored Zig crypto) rather than OpenSSL — check for ChaCha/Salsa
+  constant tables (`expand 32-byte k`) before assuming custom crypto.
+
+Both languages: `checksec` output usually shows `No canary` (Zig) and static
+linking (both). For either, the fast path is hooking `write`/`read` syscalls
+and letting the program reveal its I/O shape before opening the decompiler.
+

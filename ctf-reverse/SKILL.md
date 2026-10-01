@@ -11,12 +11,16 @@ metadata:
 # CTF Reverse Engineering
 
 Quick reference for RE challenges. For detailed techniques, see supporting files.
+**Don't know where to start, or stuck? Open [methodology.md](methodology.md) first** —
+it has the triage decision tree, the L0–L6 escalation ladder, and a stuck-recovery
+table. Ready-to-run scripts (angr solver, Frida hook pack, Ghidra bulk export,
+Unicorn harness, XOR toolkit) live in [scripts/](scripts/).
 
 ## Prerequisites
 
 **Python packages (all platforms):**
 ```bash
-pip install frida-tools angr qiling uncompyle6 capstone lief z3-solver
+pip install frida-tools angr qiling uncompyle6 capstone lief z3-solver unicorn
 # For Python 3.9+ bytecode: build pycdc from source
 git clone https://github.com/zrax/pycdc && cd pycdc && cmake . && make
 ```
@@ -41,6 +45,12 @@ r2pm -ci r2ghidra   # Native Ghidra decompiler for radare2
 
 ## Additional Resources
 
+- [methodology.md](methodology.md) - Systematic playbook: Stage-0 triage table (observation → conclusion → next move), symptom routing tree, escalation ladder L0 quick-wins → L1 static → L2 dynamic hooks → L3 symbolic → L4 emulation → L5 side channels → L6 manual deobfuscation, stuck-recovery table, verification checklist, competition time-boxing
+- [scripts/](scripts/) - Ready-to-run templates: [angr_solve.py](scripts/angr_solve.py) (generic stdin flag-checker solver, stdout-string or address mode), [frida_hooks.js](scripts/frida_hooks.js) (comparison hook pack with hexdump + optional backtrace), [ghidra_export.py](scripts/ghidra_export.py) (headless decompile-all to .c for grep/LLM triage), [unicorn_harness.py](scripts/unicorn_harness.py) (x86-64/AArch64 ELF function harness with input/output buffers), [xor_solve.py](scripts/xor_solve.py) (single-byte brute, known-plaintext keystream, repeating-key period search), [const_scan.py](scripts/const_scan.py) (crypto magic-constant scanner, both endians)
+- [crypto-constants.md](crypto-constants.md) - Identify crypto before reversing it: fingerprint table (TEA golden ratio, MD5/SHA init+T constants, AES S-box/T-tables, Blowfish pi P-array, RC5/RC6, Murmur/FNV, Base32 alphabets, CRC32, DES S-boxes), decompiled shapes of standard crypto (TEA rounds, RC4 KSA/PRGA, AES rounds, bignum modexp), key/IV/mode extraction recipe, custom-table rule (always dump from binary)
+- [vm-analysis.md](vm-analysis.md) - Custom VM playbook: recognizing the dispatch shape, the six steps (dispatch → VM state struct → instruction format → semantics table → Python disassembler → trace-first shortcut), VM archetypes table (stack/register/accumulator/encrypted-opcode/self-modifying/one-opcode/VM-in-VM), solve strategies (invert, Z3, hybrid trace+lift), pitfalls (computed jumps, decoy handlers, early-exit side channels)
+- [z3-cookbook.md](z3-cookbook.md) - Transcribing decompiled checks to Z3: C→Z3 translation dictionary (wrapping arithmetic, LShR vs arithmetic shift, UDiv/URem vs signed, casts via Extract/ZeroExt, rotations, lookup tables via If-chains), recipes (per-byte transforms, checksum-vs-dumped-target, unrolled loops, mixed widths), seven gotchas (printability-first, uniqueness re-check, wrong-transcription validation), when NOT to use Z3
+- [decompiler-literacy.md](decompiler-literacy.md) - Reading Hex-Rays/Ghidra output: type vocabulary (_DWORD, LOBYTE/BYTE1, qmemcpy), compiler idioms that masquerade as logic (magic-number division, SIMD compare, sign-bit tricks, goto-from-switch), the three readability moves (rename, retype, restructure data into structs), where decompilers lie (mid-function entry, custom calling conventions, self-modifying code, stack-frame errors, Thumb confusion), x86-64/AArch64/MIPS register quick tables, backwards reading workflow for check functions
 - [tools.md](tools.md) - Static analysis tools (GDB, Ghidra, radare2, IDA, Binary Ninja, dogbolt.org, RISC-V with Capstone, Unicorn emulation, Python bytecode, WASM, Android APK, .NET, packed binaries)
 - [tools-dynamic.md](tools-dynamic.md) - Dynamic analysis tools: Frida (hooking, anti-debug bypass, memory scanning, Android/iOS), angr symbolic execution (path exploration, constraints, CFG), lldb (macOS/LLVM debugger), x64dbg (Windows)
 - [tools-emulation.md](tools-emulation.md) - Emulation frameworks and side-channel tooling: Qiling (cross-platform OS-level emulation), Triton (DSE), Intel Pin instruction-counting + genetic algorithm side channel, opcode-only trace reconstruction, LD_PRELOAD time freeze and memcmp side-channel for byte-by-byte bruteforce
@@ -48,6 +58,7 @@ r2pm -ci r2ghidra   # Native Ghidra decompiler for radare2
 - [tools-advanced-2.md](tools-advanced-2.md) - Advanced tools (Part 2): advanced GDB (Python scripting, brute-force, conditional breakpoints, watchpoints, reverse debugging with rr, pwndbg/GEF), advanced Ghidra scripting, patching (Binary Ninja API, LIEF), GDB constraint extraction + ILP solver (BackdoorCTF 2017), GDB position-encoded input zero flag monitoring (EKOPARTY 2017), LD_PRELOAD execute-only binary dump (BackdoorCTF 2017), PEDA current_inst bit-by-bit flag scraper (CONFidence CTF 2019 Teaser)
 - [anti-analysis.md](anti-analysis.md) - Anti-analysis taxonomy: Linux anti-debug (ptrace, /proc, timing, signals, direct syscalls), Windows anti-debug (PEB, NtQueryInformationProcess, heap flags, TLS callbacks, HW/SW breakpoint detection, exception-based, thread hiding), anti-VM/sandbox (CPUID, MAC, timing, artifacts, resources), anti-DBI (Frida detection/bypass), code integrity/self-hashing, anti-disassembly (opaque predicates, junk bytes), MBA identification/simplification, comprehensive bypass strategies
 - [anti-analysis-ctf.md](anti-analysis-ctf.md) - CTF writeup techniques: SIGILL handler for execution mode switching (Hack.lu 2015), SIGFPE signal handler side-channel via strace counting (PlaidCTF 2017), instruction trace inversion with Keystone and Unicorn (MeePwn 2017), call-less function chaining via stack frame manipulation (THC 2018), parent-patched child binary dump via `process_vm_writev` (Google CTF Quals 2018)
+- [anti-analysis-macos.md](anti-analysis-macos.md) - macOS-specific anti-analysis: `ptrace(PT_DENY_ATTACH)` detection and four bypasses (binary patch byte table for arm64/x86_64, lldb `thread return`, Frida replace, DYLD interposer), sysctl `P_TRACED` scrubbing, hardened runtime / library validation / DYLD env stripping with `codesign` re-signing recipe (get-task-allow), lldb PIE recipes
 - [patterns.md](patterns.md) - Foundational binary patterns: custom VMs, anti-debugging, nanomites, self-modifying code, XOR ciphers, mixed-mode stagers, LLVM obfuscation, S-box/keystream, SECCOMP/BPF, exception handlers, memory dumps, byte-wise transforms, x86-64 gotchas, custom mangle reversing, position-based transforms, hex-encoded string comparison, signal-based binary exploration
 - [patterns-runtime.md](patterns-runtime.md) - Runtime patching and oracle techniques: malware anti-analysis bypass, multi-stage shellcode loaders, timing side-channel attacks, multi-thread anti-debug with decoy + signal handler MBA (ApoorvCTF 2026), INT3 patch + coredump brute-force oracle (Pwn2Win 2016), signal handler chain + LD_PRELOAD oracle (Nuit du Hack 2016), printf format string VM decompilation to Z3 (SECCON 2017), quadtree recursive image format parser (Google CTF Quals 2018)
 - [patterns-ctf.md](patterns-ctf.md) - Competition-specific patterns (Part 1): hidden emulator opcodes, LD_PRELOAD key extraction, SPN static extraction, image XOR smoothness, byte-at-a-time cipher, mathematical convergence bitmap, Windows PE XOR bitmap OCR, two-stage RC4+VM loaders, GBA ROM meet-in-the-middle, Sprague-Grundy game theory, kernel module maze solving, multi-threaded VM channels, backdoored shared library detection via string diffing, custom binfmt kernel module with RC4 flat binaries, hash-resolved imports / no-import ransomware, ELF section header corruption for anti-analysis
@@ -55,7 +66,7 @@ r2pm -ci r2ghidra   # Native Ghidra decompiler for radare2
 - [patterns-ctf-3.md](patterns-ctf-3.md) - Competition-specific patterns (Part 3): Z3 single-line Python circuit, sliding window popcount, keyboard LED Morse code via ioctl, C++ destructor-hidden validation, syscall side-effect memory corruption, MFC dialog event handlers, VM sequential key-chain brute-force, Burrows-Wheeler transform inversion, OpenType font ligature exploitation, GLSL shader VM with self-modifying code, instruction counter as cryptographic state, batch crackme automation via objdump, fork+pipe+dead branch anti-analysis, TensorFlow DNN inversion via sigmoid layer inversion, BPF filter analysis via kernel JIT to x64 assembly
 - [languages.md](languages.md) - Language-specific: Python bytecode & opcode remapping, Python version-specific bytecode, Pyarmor static unpack, DOS stubs, Unity IL2CPP, HarmonyOS HAP/ABC, Brainfuck/esolangs (+ BF character-by-character static analysis, BF side-channel read count oracle, BF comparison idiom detection), UEFI, transpilation to C, code coverage side-channel, OPAL functional reversing, non-bijective substitution, FRACTRAN program inversion
 - [languages-platforms.md](languages-platforms.md) - Platform/framework-specific: Roblox place file analysis, Godot game asset extraction, Rust serde_json schema recovery, Android JNI RegisterNatives obfuscation, Android DEX runtime bytecode patching via /proc/self/maps, Android native .so loading bypass via new project, Frida Firebase Cloud Functions bypass, Verilog/hardware RE, prefix-by-prefix hash reversal, Ruby/Perl polyglot constraint satisfaction, Electron ASAR extraction + native binary analysis, Node.js npm runtime introspection
-- [languages-compiled.md](languages-compiled.md) - Go binary reversing (GoReSym, goroutines, memory layout, channel ops, embed.FS, Go binary UUID patching for C2 enumeration), Rust binary reversing (demangling, Option/Result, Vec, panic strings), Swift binary reversing (demangling, protocol witness tables), Kotlin/JVM (coroutine state machines), Haskell GHC CMM intermediate language for recursive structure analysis, C++ (vtable reconstruction, RTTI, STL patterns)
+- [languages-compiled.md](languages-compiled.md) - Go binary reversing (GoReSym, goroutines, memory layout, channel ops, embed.FS, Go binary UUID patching for C2 enumeration), Rust binary reversing (demangling, Option/Result, Vec, panic strings), Swift binary reversing (demangling, protocol witness tables), Kotlin/JVM (coroutine state machines), Haskell GHC CMM intermediate language for recursive structure analysis, C++ (vtable reconstruction, RTTI, STL patterns), Nim & Zig (identification markers, NimMain entry chain, length-prefixed strings/slices, Zig panic-string anchoring, optional/error-union value semantics)
 - [platforms.md](platforms.md) - Platform-specific RE: macOS/iOS (Mach-O, code signing, Objective-C runtime, Swift, dyld, jailbreak bypass), embedded/IoT firmware (binwalk, UART/JTAG/SPI extraction, ARM/MIPS, RTOS), kernel drivers (Linux .ko, eBPF, Windows .sys), game engines (Unreal Engine, Unity, anti-cheat, Lua), automotive CAN bus
 - [platforms-hardware.md](platforms-hardware.md) - Hardware and advanced architecture RE: HD44780 LCD controller GPIO reconstruction, RISC-V advanced (custom extensions, privileged modes, debugging), ARM64/AArch64 reversing and exploitation (calling convention, ROP gadgets, qemu-aarch64-static emulation)
 - [field-notes.md](field-notes.md) - Quick reference notes: binary types, anti-debugging bypass, specialized patterns, CTF case notes
@@ -74,6 +85,8 @@ r2pm -ci r2ghidra   # Native Ghidra decompiler for radare2
 
 ## Problem-Solving Workflow
 
+Full version with entry/exit criteria per level: [methodology.md](methodology.md).
+
 1. **Start with strings extraction** - many easy challenges have plaintext flags
 2. **Try ltrace/strace** - dynamic analysis often reveals flags without reversing
 3. **Try Frida hooking** - hook strcmp/memcmp to capture expected values without reversing
@@ -82,6 +95,8 @@ r2pm -ci r2ghidra   # Native Ghidra decompiler for radare2
 6. **Map control flow** before modifying execution
 7. **Automate manual processes** via scripting (r2pipe, Frida, angr, Python)
 8. **Validate assumptions** by comparing decompiler outputs (dogbolt.org for side-by-side)
+9. **Climb, don't dig** - if a level stalls, note what you know and escalate to the
+   next technique instead of grinding one decompile for hours
 
 ## Quick Wins (Try First!)
 
