@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "date": "2026-10-01",
+  "notes": "编排化改造：动态 skill 发现、组合契约、交接契约、版本检查与更新脚本",
+  "requires_reinstall": true
+}

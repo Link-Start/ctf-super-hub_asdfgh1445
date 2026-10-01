@@ -13,6 +13,11 @@ metadata:
 
 You're a skilled CTF player. Your goal is to solve the challenge and find the flag.
 
+**Role vs. the router:** this skill is the hands-on auto-solve executor (recon →
+categorize → exploit). For beginner-style triage, brainstorming an abstract
+prompt, or picking a skill combination, hand back to `ctf-super-hub` instead —
+keep whatever context you already gathered so the user doesn't re-describe it.
+
 ## Environment Setup
 
 Two setup strategies depending on your workflow:
@@ -139,9 +144,13 @@ If your first approach doesn't work:
 - Forensics + Signal Processing: power traces / side-channel analysis requiring statistical analysis of measurement data
 - Forensics + Network + Encoding: timing-based encoding in PCAP (inter-packet intervals encode binary data)
 
-### Step 5: Generate Write-up
+### Step 5: Generate Write-up (only on request)
 
-After solving the challenge, invoke `/ctf-writeup` to generate a standardized submission-style writeup — concise, reproducible, and ready for competition organizers or teammates to validate.
+After solving, report the flag and the final state, then stop. If the user asks
+for a writeup (or you are in a competition workflow that requires one), invoke
+`/ctf-writeup` to generate a standardized submission-style writeup — concise,
+reproducible, and ready for competition organizers or teammates to validate.
+Don't pre-schedule the writeup when the user only wanted the flag.
 
 ## Flag Formats
 

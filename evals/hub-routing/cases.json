@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "id": "T1",
+      "title": "Easy RSA 分类正例",
+      "scenario": "一道 CTF 题：Easy RSA。题目只给了三个数：n = 9732824...（154位大数）, e = 65537, c = 84209...。题面写：Standard RSA, nothing fancy. 没有附件，没有远程服务。",
+      "expect": {
+        "primary_any_of": ["ctf-crypto"],
+        "forbidden_primary": ["strix-", "solve-challenge", "ctf-web"],
+        "composition": null
+      },
+      "notes": "单 skill 路由；不增强 strix；引用 ctf-crypto 的输入匹配与阶段匹配。"
+    },
+    {
+      "id": "T2",
+      "title": "SQLi 已进入验证阶段（增强正例）",
+      "scenario": "CTF 靶场题，登录页 URL 已给出，手动输入 admin' or '1'='1 时页面行为明显变了，想系统验证 SQL 注入并拖出数据。",
+      "expect": {
+        "primary_any_of": ["strix-sql-injection"],
+        "forbidden_primary": ["ctf-web"],
+        "composition": null
+      },
+      "notes": "关键规则：进入验证阶段后增强到 strix-*，不停留在 ctf-web 大类判断；授权提醒加分。"
+    },
+    {
+      "id": "T3",
+      "title": "OSINT 边界反例",
+      "scenario": "OSINT 题：Instagram 帖子链接，照片有海滩和塔，找拍摄地点。",
+      "expect": {
+        "primary_any_of": ["ctf-osint"],
+        "forbidden_primary": ["strix-", "ctf-web", "ctf-forensics"],
+        "composition": null
+      },
+      "notes": "反例：带 URL 不等于 Web 题；主类判断优先于增强。"
+    },
+    {
+      "id": "T4",
+      "title": "组合契约（自定义加密 token + writeup）",
+      "scenario": "Web CTF 题：登录后 cookie 是自定义加密 token，需先弄清算法再伪造 admin 拿 flag；队规要求交可复现 writeup。",
+      "expect": {
+        "primary_any_of": ["ctf-web"],
+        "forbidden_primary": ["solve-challenge"],
+        "composition": {
+          "main": "ctf-web",
+          "aux_any_of": [["ctf-reverse", "ctf-crypto"], ["ctf-writeup"]],
+          "max_aux": 2
+        }
+      },
+      "notes": "考结构不考具体成员：1 主 + ≤2 辅、角色标注（证据补充/验收约束）、主最接近 flag 交付。"
+    },
+    {
+      "id": "T5",
+      "title": "ELF 无远程服务（留出陷阱）",
+      "scenario": "拿到一个 ELF 文件，没有远程服务或端口，题面说 the binary validates your license serial, find a valid one。",
+      "expect": {
+        "primary_any_of": ["ctf-reverse"],
+        "forbidden_primary": ["ctf-pwn", "strix-"],
+        "composition": null
+      },
+      "notes": "留出样本：reverse/pwn 切分规则（无远程服务 → 不是 pwn）。"
+    }
+  ]
+}

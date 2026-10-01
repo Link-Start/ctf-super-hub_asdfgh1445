@@ -70,7 +70,21 @@ def check_skills():
             errors.append(f'{skill.name}: 缺少 description')
         desc = values.get('description', '')
         if '触发名:' not in desc:
-            warnings.append(f'{skill.name}: description 中未显式包含触发名')
+            errors.append(f'{skill.name}: description 中未显式包含触发名')
+        for link in re.findall(r'\[[^\]]*\]\(([^)#\s]+)\)', text):
+            if re.match(r'^(https?:|mailto:|#|/)', link):
+                continue
+            target = (skill / link).resolve()
+            if not target.exists():
+                errors.append(f'{skill.name}: SKILL.md 相对链接失效 -> {link}')
+        leftover = re.findall(r'\b(TODO|FIXME|TBD)\b|待补|占位符', text)
+        if leftover:
+            warnings.append(f'{skill.name}: SKILL.md 疑似未完成占位标记: {leftover[:3]}')
+        for py in sorted(skill.glob('scripts/*.py')):
+            try:
+                compile(py.read_text(encoding='utf-8', errors='ignore'), str(py), 'exec')
+            except SyntaxError as exc:
+                errors.append(f'{skill.name}: {py.name} 语法错误 (line {exc.lineno})')
         if skill.name == 'ctf-super-hub':
             refs = [
                 'references/mode-playbook.md',
@@ -84,12 +98,27 @@ def check_skills():
             for ref in refs:
                 if not (skill / ref.replace('references/', 'references/')).exists():
                     errors.append(f'ctf-super-hub: 缺少 {ref}')
+    for py in sorted((ROOT / 'scripts').glob('*.py')):
+        try:
+            compile(py.read_text(encoding='utf-8', errors='ignore'), str(py), 'exec')
+        except SyntaxError as exc:
+            errors.append(f'scripts/{py.name}: 语法错误 (line {exc.lineno})')
     return errors, warnings
 
 
 def main():
     missing = check_repo_files()
     errors, warnings = check_skills()
+
+    if '--json' in sys.argv:
+        import json
+        print(json.dumps({
+            'missing_repo_files': missing,
+            'errors': errors,
+            'warnings': warnings,
+            'ok': not missing and not errors,
+        }, ensure_ascii=False, indent=2))
+        sys.exit(1 if (missing or errors) else 0)
 
     if missing:
         print('缺少仓库级文件：')

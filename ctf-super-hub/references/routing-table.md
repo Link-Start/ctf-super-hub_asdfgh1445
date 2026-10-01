@@ -43,3 +43,23 @@ Choose `ctf-pwn` first when the main problem is:
 - exploiting a live service
 
 If unsure, start with `ctf-reverse` to understand the binary, then pivot to `ctf-pwn`.
+
+## Strix escalation (offline fallback list)
+
+Use this list only when `scripts/list-installed-skills.py` fails or prints nothing;
+normally route with the script's output. Escalate to `strix-*` only when the
+challenge has entered the active web-testing stage (probing, crawling,
+fuzzing, vuln verification), not at the category-judgment stage.
+
+Toolchain:
+`strix-httpx`, `strix-katana`, `strix-ffuf`, `strix-nuclei`, `strix-sqlmap`
+
+Vuln-specific:
+`strix-sql-injection`, `strix-xss`, `strix-ssrf`, `strix-rce`,
+`strix-authentication-jwt`, `strix-idor`, `strix-information-disclosure`,
+`strix-insecure-file-uploads`, `strix-open-redirect`, `strix-csrf`,
+`strix-business-logic`, `strix-broken-function-level-authorization`,
+`strix-path-traversal-lfi-rfi`
+
+Mode:
+`strix-quick`, `strix-standard`, plus entry `strix-beginner-hub`
