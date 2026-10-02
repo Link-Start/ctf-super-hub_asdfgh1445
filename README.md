@@ -824,5 +824,9 @@ python3 evals/hub-routing/check_contracts.py
 </p>
 
 <p align="center">
+  <sub>GitHub 负责展示与分发 · LinuxDo 负责中文社区传播与反馈 · LinuxDo 发布帖：待补充</sub>
+</p>
+
+<p align="center">
   <i>这个项目真正解决的，不是“skill 不够多”，而是“小白用户的第一步总是最难开始”。</i>
 </p>

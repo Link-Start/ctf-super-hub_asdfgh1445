@@ -55,4 +55,7 @@
   <rect x="1098" y="286" width="400" height="6" fill="none" stroke="#5C5C5E" stroke-width="1"/>
   <rect x="1098" y="286" width="236" height="6" fill="#FF7A18"/>
   <text x="1098" y="388" font-size="12" fill="#92908C">中文用户优先体验</text>
+
+  <circle cx="1078" cy="436" r="3" fill="#FF7A18"/>
+  <text x="1516" y="441" font-size="13" fill="#92908C" text-anchor="end" letter-spacing="0.5">GITHUB 展示与分发 · LINUXDO 中文社区传播与反馈 · linux.do</text>
 </svg>
